@@ -33,16 +33,26 @@ int main() {
     // File Writing
 
     printf("\nWriting numbers to file...\n\n");
+    // Writes to rannums.txt
     int fileNums = open("rannums.txt", O_CREAT | O_RDWR, 0644);
-    write(fileNums, numran, sizeof(numran));
-    close(fileNums);
+    if (fileNums < 0) {
+        printf("You appear to be missing a /dev/random directory.\n");
+    } else {
+        write(fileNums, numran, sizeof(numran));
+        close(fileNums);
+    }
 
     // File Reading
     printf("Reading numbers from file...\n\n");
     int results[10];
+    // Reads from rannums.txt
     fileNums = open("rannums.txt", O_RDONLY);
-    read(fileNums, results, sizeof(results));
-    close(fileNums);
+    if (fileNums < 0) {
+        printf("You appear to be missing a /dev/random directory.\n");
+    } else {
+        read(fileNums, results, sizeof(results));
+        close(fileNums);
+    }
     
     // Print result
     printf("Verification that written values were the same:\n");
